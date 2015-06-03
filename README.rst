@@ -13,7 +13,7 @@ Flask-osa is pip installable:
 Configure
 ---------
 
-The only configuration is ``OSA_URL`` and must be set. You can pass any kwargs to ``OSA()`` for further configuration. The kwargs will be passed to ``osa.client.Client()``.
+The only configuration is ``OSA_WSDL`` and must be set. You can pass any kwargs to ``OSA()`` for further configuration. The kwargs will be passed to ``osa.client.Client()``.
 
 Usage
 -----

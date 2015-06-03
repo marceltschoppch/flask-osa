@@ -16,10 +16,10 @@ class OSA(object):
         # know flask well enough to be sure), but that's how it's done in
         # flask-pymongo so let's use it for now.
         app.extensions['OSA'] = \
-            Client(app.config['OSA_URL'], **kwargs)
+            Client(app.config['OSA_WSDL'], **kwargs)
 
     def __getattr__(self, item):
-        if not 'OSA' in current_app.extensions.keys():
+        if 'OSA' not in current_app.extensions.keys():
             raise Exception(
                 'not initialised, did you forget to call init_app?')
         return getattr(current_app.extensions['OSA'], item)
