@@ -1,3 +1,6 @@
+import os
+import urlparse
+
 from flask import current_app
 from osa.client import Client
 
@@ -15,8 +18,13 @@ class OSA(object):
         # do we register on? app.extensions looks a little hackish (I don't
         # know flask well enough to be sure), but that's how it's done in
         # flask-pymongo so let's use it for now.
-        app.extensions['OSA'] = \
-            Client(app.config['OSA_WSDL'], **kwargs)
+        if urlparse.urlparse(app.config['OSA_WSDL']).scheme:
+            app.extensions['OSA'] = Client(app.config['OSA_WSDL'], 
+                                           **kwargs)
+        else:
+            app.extensions['OSA'] = Client(
+                os.path.join(app.root_path, app.config['OSA_WSDL']),
+                 **kwargs)
 
     def __getattr__(self, item):
         if 'OSA' not in current_app.extensions.keys():
